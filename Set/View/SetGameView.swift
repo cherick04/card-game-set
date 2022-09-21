@@ -35,7 +35,7 @@ struct SetGameView: View {
     
     private var newGameButton: some View {
         Button("New Game") {
-            // TODO: - new game intent
+            game.newGame()
         }
     }
 }

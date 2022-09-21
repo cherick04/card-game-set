@@ -12,7 +12,7 @@ import UIKit
 class SetGame: ObservableObject {
     
     /// 27 sets of 3 cards give a total of 81 cards
-    static private let DEFAULT_NUMBER_OF_SETS = 27
+    static private let DEFAULT_NUMBER_OF_CARDS = 12
     
     // TODO: - Change CardGame Generic to a custom one
     typealias Game = CardGame<Feature>
@@ -22,7 +22,8 @@ class SetGame: ObservableObject {
     
     static func createSetGame() -> Game {
         let data = Feature.createAllCards().shuffled()
-        return Game(numberOfCardSets: 4) { data[$0] }
+        let cardCount = min(DEFAULT_NUMBER_OF_CARDS, data.count)
+        return Game(cardCount: cardCount) { data[$0] }
     }
     
     // MARK: - Properties
@@ -32,6 +33,10 @@ class SetGame: ObservableObject {
     var cards: [Card] {
         model.cards
     }
+    /// Array of cards showing up on deck
+    var cardsOnDeck: [Card] {
+        model.cardsOnDeck
+    }
     
     // MARK: - Initializer
     
@@ -40,6 +45,14 @@ class SetGame: ObservableObject {
     }
     
     // MARK: - Intent(s)
+    
+    func newGame() {
+        model = SetGame.createSetGame()
+    }
+    
+    func dealMoreCards() {
+        model.dealMoreCards()
+    }
     
     // MARK: - Structs
     

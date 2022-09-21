@@ -17,8 +17,20 @@ struct CardView: View {
                 let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
                 shape.fill(.white)
                 shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                getSymbol()
-                    
+                getContent(for: geometry.size)
+//                getContent()
+//                getSymbol()
+//                    .foregroundColor(getColor())
+//                    .opacity(getOpacity())
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func getContent(for size: CGSize) -> some View {
+        LazyVGrid(columns: [GridItem(.fixed(size.width / 1.5))]) {
+            ForEach(0..<card.content.number.rawValue, id: \.self) { _ in
+                getSymbol().aspectRatio(2, contentMode: .fit)
             }
         }
     }
@@ -26,22 +38,34 @@ struct CardView: View {
     @ViewBuilder
     private func getSymbol() -> some View {
         switch card.content.symbol {
-        case .diamond:
-            Circle()
-                .strokeBorder(lineWidth: 3)
-                .foregroundColor(getColor())
-                .opacity(getOpacity())
-        case .oval:
-            Ellipse()
-                .strokeBorder(lineWidth: 3)
-                .foregroundColor(getColor())
-                .opacity(getOpacity())
-        case .rectangle:
-            RoundedRectangle(cornerRadius: 20)
-                .strokeBorder(lineWidth: 3)
-                .foregroundColor(getColor())
-                .opacity(getOpacity())
+        case .diamond: diamondSymbol
+        case .oval: ovalSymbol
+        case .rectangle: rectangleSymbol
         }
+    }
+    
+    private var diamondSymbol: some View {
+        ZStack {
+            Circle().fill(getColor()).opacity(getOpacity())
+            Circle().strokeBorder(lineWidth: 3)
+        }
+        .foregroundColor(getColor())
+    }
+    
+    private var ovalSymbol: some View {
+        ZStack {
+            Ellipse().fill(getColor()).opacity(getOpacity())
+            Ellipse().strokeBorder(lineWidth: 3)
+        }
+        .foregroundColor(getColor())
+    }
+    
+    private var rectangleSymbol: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 5).fill(getColor()).opacity(getOpacity())
+            RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 3)
+        }
+        .foregroundColor(getColor())
     }
     
     private func getOpacity() -> Double {
@@ -63,25 +87,5 @@ struct CardView: View {
     private struct DrawingConstants {
         static let cornerRadius: CGFloat = 15
         static let lineWidth: CGFloat = 3
-    }
-}
-
-struct CardContentView<Item, ItemView>: View where Item: Identifiable, ItemView: View {
-    let items: [Item]
-    let content: (Item) -> ItemView
-    
-    init(items: [Item], @ViewBuilder content: @escaping (Item) -> ItemView) {
-        self.items = items
-        self.content = content
-    }
-    
-    var body: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .center, spacing: 5) {
-                ForEach(items) { item in
-                    content(item)
-                }
-            }
-        }
     }
 }

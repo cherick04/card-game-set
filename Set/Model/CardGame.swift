@@ -12,16 +12,22 @@ struct CardGame<CardContent> {
     // MARK: - Properties
     
     private(set) var cards: [Card]
+    private(set) var cardsOnDeck: [Card]
+    private(set) var selectedCards: [Card]
     
     // MARK: - Initializer
-    init(numberOfCardSets: Int, createCardContent: (Int) -> CardContent) {
+    init(cardCount: Int, createCardContent: (Int) -> CardContent) {
         cards = []
-        for setIndex in 0..<numberOfCardSets {
-            let content = createCardContent(setIndex)
-            cards.append(Card(content: content, id: setIndex * 3))
-            cards.append(Card(content: content, id: setIndex * 3 + 1))
-            cards.append(Card(content: content, id: setIndex * 3 + 2))
+        cardsOnDeck = []
+        selectedCards = []
+        for setIndex in 0..<cardCount {
+            cards.append(Card(content: createCardContent(setIndex), id: setIndex))
         }
+        cards.shuffle()
+    }
+    
+    func dealMoreCards() {
+        // TODO: -
     }
     
     // MARK: - Other Types

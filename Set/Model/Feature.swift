@@ -8,17 +8,18 @@
 import Foundation
 
 struct Feature {
-    let number: FeatureInt
+    let number: FeatureNumber
     let color: FeatureColor
     let symbol: FeatureSymbol
     let shade: FeatureShade
-    
-    // MARK: - Static
-    
+}
+
+extension Feature {
+
     /// Returns an array of `Feature` that contains all 81 cards
     static func createAllCards() -> [Feature] {
         var features: [Feature] = []
-        for number in FeatureInt.allCases {
+        for number in FeatureNumber.allCases {
             for color in FeatureColor.allCases {
                 for symbol in FeatureSymbol.allCases {
                     for shade in FeatureShade.allCases {
@@ -33,10 +34,10 @@ struct Feature {
     }
 }
 
-enum FeatureInt: CaseIterable {
-    case one
-    case two
-    case three
+enum FeatureNumber: Int, CaseIterable {
+    case one = 1
+    case two = 2
+    case three = 3
 }
 
 enum FeatureColor: CaseIterable {

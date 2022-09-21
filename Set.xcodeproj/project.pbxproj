@@ -61,12 +61,12 @@
 		7C70093328D7F379004F474D /* Set */ = {
 			isa = PBXGroup;
 			children = (
+				7C70093A28D7F37C004F474D /* Preview Content */,
+				7C70093828D7F37C004F474D /* Assets.xcassets */,
+				7C70093428D7F379004F474D /* SetApp.swift */,
+				7C70094228D92FAE004F474D /* Model */,
 				7C70094428D92FCE004F474D /* ViewModel */,
 				7C70094328D92FC3004F474D /* View */,
-				7C70094228D92FAE004F474D /* Model */,
-				7C70093428D7F379004F474D /* SetApp.swift */,
-				7C70093828D7F37C004F474D /* Assets.xcassets */,
-				7C70093A28D7F37C004F474D /* Preview Content */,
 			);
 			path = Set;
 			sourceTree = "<group>";
