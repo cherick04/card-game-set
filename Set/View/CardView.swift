@@ -22,6 +22,7 @@ struct CardView: View {
         }
     }
     
+    /// Creates content for the card.
     @ViewBuilder
     private func getContent(for size: CGSize) -> some View {
         LazyVGrid(columns: [GridItem(.fixed(size.width / 1.5))]) {
@@ -31,52 +32,73 @@ struct CardView: View {
         }
     }
     
+    /// Diamond shape
+    private var diamondSymbol: some View {
+        ZStack {
+            Diamond()
+                .fill(getColor())
+                .opacity(getOpacity())
+            Diamond()
+                .stroke(lineWidth: 3)
+        }
+        .foregroundColor(getColor())
+    }
+    
+    /// Oval shape
+    private var ovalSymbol: some View {
+        ZStack {
+            Ellipse()
+                .fill(getColor())
+                .opacity(getOpacity())
+            Ellipse()
+                .strokeBorder(lineWidth: 3)
+        }
+        .foregroundColor(getColor())
+    }
+    
+    /// Rectangle Shape
+    private var rectangleSymbol: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 5)
+                .fill(getColor())
+                .opacity(getOpacity())
+            RoundedRectangle(cornerRadius: 5)
+                .strokeBorder(lineWidth: 3)
+        }
+        .foregroundColor(getColor())
+    }
+    
     @ViewBuilder
     private func getSymbol() -> some View {
         switch card.content.symbol {
-        case .diamond: diamondSymbol
-        case .oval: ovalSymbol
-        case .rectangle: rectangleSymbol
+        case .diamond:
+            diamondSymbol
+        case .oval:
+            ovalSymbol
+        case .rectangle:
+            rectangleSymbol
         }
-    }
-    
-    private var diamondSymbol: some View {
-        ZStack {
-            Diamond().fill(getColor()).opacity(getOpacity())
-            Diamond().stroke(lineWidth: 3)
-        }
-        .foregroundColor(getColor())
-    }
-    
-    private var ovalSymbol: some View {
-        ZStack {
-            Ellipse().fill(getColor()).opacity(getOpacity())
-            Ellipse().strokeBorder(lineWidth: 3)
-        }
-        .foregroundColor(getColor())
-    }
-    
-    private var rectangleSymbol: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 5).fill(getColor()).opacity(getOpacity())
-            RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 3)
-        }
-        .foregroundColor(getColor())
     }
     
     private func getOpacity() -> Double {
         switch card.content.shade {
-        case .filled: return 1
-        case .shaded: return 0.5
-        case .stroked: return 0
+        case .filled:
+            return 1
+        case .shaded:
+            return 0.5
+        case .stroked:
+            return 0
         }
     }
     
     private func getColor() -> Color {
         switch card.content.color {
-        case .red: return .red
-        case .green: return .green
-        case .purple: return .purple
+        case .red:
+            return .red
+        case .green:
+            return .green
+        case .purple:
+            return .purple
         }
     }
     

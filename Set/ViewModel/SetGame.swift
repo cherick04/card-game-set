@@ -21,9 +21,9 @@ class SetGame: ObservableObject {
     // MARK: - Static
     
     static func createSetGame() -> Game {
-        let data = Feature.createAllCards().shuffled()
-        let cardCount = min(DEFAULT_NUMBER_OF_CARDS, data.count)
-        return Game(cardCount: cardCount) { data[$0] }
+        let data = Feature.allCards().shuffled()
+        let cardsOnDeckCount = min(DEFAULT_NUMBER_OF_CARDS, data.count)
+        return Game(cardCount: data.count, cardsOnDeckCount: cardsOnDeckCount) { data[$0] }
     }
     
     // MARK: - Properties
@@ -50,8 +50,8 @@ class SetGame: ObservableObject {
         model = SetGame.createSetGame()
     }
     
-    func dealMoreCards() {
-        model.dealMoreCards()
+    func dealThreeMoreCards() {
+        model.dealMoreCards(count: 3)
     }
     
     // MARK: - Structs

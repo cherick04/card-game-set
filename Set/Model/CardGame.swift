@@ -16,18 +16,23 @@ struct CardGame<CardContent> {
     private(set) var selectedCards: [Card]
     
     // MARK: - Initializer
-    init(cardCount: Int, createCardContent: (Int) -> CardContent) {
+    init(cardCount: Int, cardsOnDeckCount: Int, createCardContent: (Int) -> CardContent) {
         cards = []
-        cardsOnDeck = []
         selectedCards = []
         for setIndex in 0..<cardCount {
             cards.append(Card(content: createCardContent(setIndex), id: setIndex))
         }
         cards.shuffle()
+        cardsOnDeck = Array(cards[0..<cardsOnDeckCount])
     }
     
-    func dealMoreCards() {
-        // TODO: -
+    // MARK: - Methods
+    mutating func dealMoreCards(count: Int) {
+        let startIndex = cardsOnDeck.count
+        let endIndex = min(cardsOnDeck.count + count, cards.count)
+        for card in cards[startIndex..<endIndex] {
+            cardsOnDeck.append(card)
+        }
     }
     
     // MARK: - Other Types

@@ -13,7 +13,7 @@ struct SetGameView: View {
     
     var body: some View {
         VStack {
-            AspectVGrid(items: game.cards, aspectRatio: 2/3) { card in
+            AspectVGrid(items: game.cardsOnDeck, aspectRatio: 2/3) { card in
                 CardView(card: card)
                     .padding(2)
             }
@@ -29,7 +29,7 @@ struct SetGameView: View {
     
     private var dealButton: some View {
         Button("Deal 3 cards") {
-            // TODO: - deal intent
+            game.dealThreeMoreCards()
         }
     }
     

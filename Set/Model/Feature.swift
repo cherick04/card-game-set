@@ -17,7 +17,7 @@ struct Feature {
 extension Feature {
 
     /// Returns an array of `Feature` that contains all 81 cards
-    static func createAllCards() -> [Feature] {
+    static func allCards() -> [Feature] {
         var features: [Feature] = []
         for number in FeatureNumber.allCases {
             for color in FeatureColor.allCases {
