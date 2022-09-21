@@ -31,6 +31,7 @@ struct SetGameView: View {
         Button("Deal 3 cards") {
             game.dealThreeMoreCards()
         }
+        .disabled(game.isDeckEmpty)
     }
     
     private var newGameButton: some View {

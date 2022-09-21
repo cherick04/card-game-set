@@ -11,7 +11,6 @@ import UIKit
 
 class SetGame: ObservableObject {
     
-    /// 27 sets of 3 cards give a total of 81 cards
     static private let DEFAULT_NUMBER_OF_CARDS = 12
     
     // TODO: - Change CardGame Generic to a custom one
@@ -29,10 +28,10 @@ class SetGame: ObservableObject {
     // MARK: - Properties
     @Published private(set) var model: Game
     
-    /// Array of all cards to be used in game
-    var cards: [Card] {
-        model.cards
+    var isDeckEmpty: Bool {
+        model.cardsOnDeck.count == model.cards.count
     }
+    
     /// Array of cards showing up on deck
     var cardsOnDeck: [Card] {
         model.cardsOnDeck
