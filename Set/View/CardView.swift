@@ -18,10 +18,6 @@ struct CardView: View {
                 shape.fill(.white)
                 shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                 getContent(for: geometry.size)
-//                getContent()
-//                getSymbol()
-//                    .foregroundColor(getColor())
-//                    .opacity(getOpacity())
             }
         }
     }
@@ -46,8 +42,8 @@ struct CardView: View {
     
     private var diamondSymbol: some View {
         ZStack {
-            Circle().fill(getColor()).opacity(getOpacity())
-            Circle().strokeBorder(lineWidth: 3)
+            Diamond().fill(getColor()).opacity(getOpacity())
+            Diamond().stroke(lineWidth: 3)
         }
         .foregroundColor(getColor())
     }
