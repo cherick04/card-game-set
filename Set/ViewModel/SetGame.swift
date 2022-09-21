@@ -11,15 +11,18 @@ import UIKit
 
 class SetGame: ObservableObject {
     
+    /// 27 sets of 3 cards give a total of 81 cards
+    static private let DEFAULT_NUMBER_OF_SETS = 27
+    
     // TODO: - Change CardGame Generic to a custom one
-    typealias Game = CardGame<String>
+    typealias Game = CardGame<Feature>
     typealias Card = Game.Card
     
     // MARK: - Static
     
     static func createSetGame() -> Game {
-        let data = ["A", "B", "C", "A", "B", "C", "A", "B", "C", "A", "B", "C"]
-        return Game(numberOfCardSets: 3) { data[$0] }
+        let data = Feature.createAllCards().shuffled()
+        return Game(numberOfCardSets: 4) { data[$0] }
     }
     
     // MARK: - Properties
@@ -37,4 +40,7 @@ class SetGame: ObservableObject {
     }
     
     // MARK: - Intent(s)
+    
+    // MARK: - Structs
+    
 }

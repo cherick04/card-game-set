@@ -15,6 +15,7 @@
 		7C70094828DA14E0004F474D /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70094728DA14E0004F474D /* CardView.swift */; };
 		7C70094A28DA1512004F474D /* CardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70094928DA1512004F474D /* CardGame.swift */; };
 		7C70094C28DA15D2004F474D /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70094B28DA15D2004F474D /* SetGame.swift */; };
+		7CB2A5DF28DA6E540066B661 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2A5DE28DA6E540066B661 /* Feature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		7C70094728DA14E0004F474D /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		7C70094928DA1512004F474D /* CardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGame.swift; sourceTree = "<group>"; };
 		7C70094B28DA15D2004F474D /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
+		7CB2A5DE28DA6E540066B661 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				7C70094928DA1512004F474D /* CardGame.swift */,
+				7CB2A5DE28DA6E540066B661 /* Feature.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C70093728D7F379004F474D /* SetGameView.swift in Sources */,
+				7CB2A5DF28DA6E540066B661 /* Feature.swift in Sources */,
 				7C70093528D7F379004F474D /* SetApp.swift in Sources */,
 				7C70094828DA14E0004F474D /* CardView.swift in Sources */,
 				7C70094628D92FF3004F474D /* AspectVGrid.swift in Sources */,
@@ -315,6 +319,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -344,6 +349,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

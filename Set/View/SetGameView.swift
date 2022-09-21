@@ -17,7 +17,6 @@ struct SetGameView: View {
                 CardView(card: card)
                     .padding(2)
             }
-            Spacer()
             HStack {
                 dealButton
                 Spacer()
