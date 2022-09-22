@@ -9,13 +9,16 @@ import SwiftUI
 
 struct SetGameView: View {
     
-    @ObservedObject var game: SetGame
+    @ObservedObject var game: SetCardGame
     
     var body: some View {
         VStack {
             AspectVGrid(items: game.cardsOnDeck, aspectRatio: 2/3) { card in
                 CardView(card: card)
                     .padding(2)
+                    .onTapGesture {
+                        game.select(card)
+                    }
             }
             HStack {
                 dealButton
@@ -43,7 +46,7 @@ struct SetGameView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let game = SetGame()
+        let game = SetCardGame()
         SetGameView(game: game)
     }
 }

@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct CardView: View {
-    // TODO: - create Card struct with content
-    let card: SetGame.Card
+    let card: SetCardGame.Card
     
     var body: some View {
         GeometryReader { geometry in
@@ -18,16 +17,9 @@ struct CardView: View {
                 shape.fill(.white)
                 shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                 getContent(for: geometry.size)
-            }
-        }
-    }
-    
-    /// Creates content for the card.
-    @ViewBuilder
-    private func getContent(for size: CGSize) -> some View {
-        LazyVGrid(columns: [GridItem(.fixed(size.width / 1.5))]) {
-            ForEach(0..<card.content.number.rawValue, id: \.self) { _ in
-                getSymbol().aspectRatio(2, contentMode: .fit)
+                if card.isSelected {
+                    shape.fill(.blue).opacity(DrawingConstants.selectedOpacity)
+                }
             }
         }
     }
@@ -39,7 +31,7 @@ struct CardView: View {
                 .fill(getColor())
                 .opacity(getOpacity())
             Diamond()
-                .stroke(lineWidth: 3)
+                .stroke(lineWidth: DrawingConstants.lineWidth)
         }
         .foregroundColor(getColor())
     }
@@ -51,7 +43,7 @@ struct CardView: View {
                 .fill(getColor())
                 .opacity(getOpacity())
             Ellipse()
-                .strokeBorder(lineWidth: 3)
+                .strokeBorder(lineWidth: DrawingConstants.lineWidth)
         }
         .foregroundColor(getColor())
     }
@@ -59,51 +51,73 @@ struct CardView: View {
     /// Rectangle Shape
     private var rectangleSymbol: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 5)
+            Rectangle()
                 .fill(getColor())
                 .opacity(getOpacity())
-            RoundedRectangle(cornerRadius: 5)
-                .strokeBorder(lineWidth: 3)
+            Rectangle()
+                .strokeBorder(lineWidth: DrawingConstants.lineWidth)
         }
         .foregroundColor(getColor())
+    }
+    
+    /// Creates content for the card.
+    private func getContent(for size: CGSize) -> some View {
+        LazyVGrid(columns: [GridItem(.fixed(size.width / 1.5))]) {
+            // Repeat symbol creation based on card number feature
+            ForEach(1...getNumber(), id: \.self) { _ in
+                getSymbol().aspectRatio(2, contentMode: .fit)
+            }
+        }
     }
     
     @ViewBuilder
     private func getSymbol() -> some View {
         switch card.content.symbol {
-        case .diamond:
+        case .a:
             diamondSymbol
-        case .oval:
+        case .b:
             ovalSymbol
-        case .rectangle:
+        case .c:
             rectangleSymbol
+        }
+    }
+    
+    private func getNumber() -> Int {
+        switch card.content.number {
+        case .a:
+            return 1
+        case .b:
+            return 2
+        case .c:
+            return 3
         }
     }
     
     private func getOpacity() -> Double {
         switch card.content.shade {
-        case .filled:
+        case .a:
             return 1
-        case .shaded:
+        case .b:
             return 0.5
-        case .stroked:
+        case .c:
             return 0
         }
     }
     
     private func getColor() -> Color {
         switch card.content.color {
-        case .red:
+        case .a:
             return .red
-        case .green:
+        case .b:
             return .green
-        case .purple:
+        case .c:
             return .purple
         }
     }
     
     private struct DrawingConstants {
         static let cornerRadius: CGFloat = 15
-        static let lineWidth: CGFloat = 3
+        static let lineWidth: CGFloat = 2
+        static let selectedOpacity: CGFloat = 0.25
     }
 }

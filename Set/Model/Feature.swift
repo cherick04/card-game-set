@@ -8,10 +8,10 @@
 import Foundation
 
 struct Feature {
-    let number: FeatureNumber
-    let color: FeatureColor
-    let symbol: FeatureSymbol
-    let shade: FeatureShade
+    let number: ThreeState
+    let color: ThreeState
+    let symbol: ThreeState
+    let shade: ThreeState
 }
 
 extension Feature {
@@ -19,10 +19,10 @@ extension Feature {
     /// Returns an array of `Feature` that contains all 81 cards
     static func allCards() -> [Feature] {
         var features: [Feature] = []
-        for number in FeatureNumber.allCases {
-            for color in FeatureColor.allCases {
-                for symbol in FeatureSymbol.allCases {
-                    for shade in FeatureShade.allCases {
+        for number in ThreeState.allCases {
+            for color in ThreeState.allCases {
+                for symbol in ThreeState.allCases {
+                    for shade in ThreeState.allCases {
                         let feature = Feature(number: number, color: color, symbol: symbol, shade: shade)
                         features.append(feature)
                     }
@@ -34,26 +34,12 @@ extension Feature {
     }
 }
 
-enum FeatureNumber: Int, CaseIterable {
-    case one = 1
-    case two = 2
-    case three = 3
-}
-
-enum FeatureColor: CaseIterable {
-    case red
-    case green
-    case purple
-}
-
-enum FeatureSymbol: CaseIterable {
-    case diamond
-    case oval
-    case rectangle
-}
-
-enum FeatureShade: CaseIterable {
-    case filled
-    case shaded
-    case stroked
+extension Feature: Equatable {
+    
+    static func ==(lhs: Feature, rhs: Feature) -> Bool {
+        lhs.number == rhs.number &&
+        lhs.color == rhs.color &&
+        lhs.symbol == rhs.symbol &&
+        lhs.shade == rhs.shade
+    }
 }
