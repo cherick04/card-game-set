@@ -7,40 +7,51 @@
 
 import Foundation
 
-struct CardGame<CardContent> where CardContent: Equatable {
+struct CardGame<CardContent> where CardContent: QuadThreeState {
     
     // MARK: - Properties
     
-    private(set) var cards: [Card]
+    private let SET_COUNT = 3
+    
+    private(set) var availableCards: [Card]
     private(set) var cardsOnDeck: [Card]
     
-    private var selectedCardIndices: [Int] = []
-    private var isPossibleSetSelected: Bool {
-        selectedCardIndices.count == 3
+    private var selectedCardIndices: [Int] = [] {
+        didSet {
+            if isPossibleSet {
+                checkIfCardsFormASet()
+            }
+        }
+    }
+    
+    private var isPossibleSet: Bool {
+        selectedCardIndices.count == SET_COUNT
     }
     
     // MARK: - Initializer
     init(cardCount: Int, cardsOnDeckCount: Int, createCardContent: (Int) -> CardContent) {
-        cards = []
+        availableCards = []
         for setIndex in 0..<cardCount {
-            cards.append(Card(content: createCardContent(setIndex), id: setIndex))
+            availableCards.append(Card(content: createCardContent(setIndex), id: setIndex))
         }
-        cards.shuffle()
-        cardsOnDeck = Array(cards[0..<cardsOnDeckCount])
+        availableCards.shuffle()
+        cardsOnDeck = Array(availableCards[0..<cardsOnDeckCount])
     }
     
     // MARK: - Methods
+    
     mutating func dealMoreCards(count: Int) {
         let startIndex = cardsOnDeck.count
-        let endIndex = min(cardsOnDeck.count + count, cards.count)
-        for card in cards[startIndex..<endIndex] {
+        // Ensuring cards on deck do not exceed the number of available cards
+        let endIndex = min(cardsOnDeck.count + count, availableCards.count)
+        for card in availableCards[startIndex..<endIndex] {
             cardsOnDeck.append(card)
         }
     }
     
     mutating func select(_ card: Card) {
         guard let chosenIndex = cardsOnDeck.firstIndex(where: {$0.id == card.id}),
-              !isPossibleSetSelected else {
+              !isPossibleSet else {
             return
         }
             
@@ -55,19 +66,30 @@ struct CardGame<CardContent> where CardContent: Equatable {
     
     // TODO: - Revise method
     private func checkIfCardsFormASet() {
-        guard selectedCardIndices.count == 3 else { return }
+        guard isPossibleSet else { return }
         
-        let cards = selectedCardIndices.map { cardsOnDeck[$0].content }
-        let isSet = areAllSame(first: cards[0], second: cards[1], third: cards[2]) ||
-            areAllDifferent(first: cards[0], second: cards[1], third: cards[2])
+        let cardContent = selectedCardIndices.map { cardsOnDeck[$0].content }
+        let allA = cardContent.map(\.stateA)
+        let allB = cardContent.map(\.stateB)
+        let allC = cardContent.map(\.stateC)
+        let allD = cardContent.map(\.stateD)
+        let isSet = (areAllSame(allA) || areAllDifferent(allA))
+                && (areAllSame(allB) || areAllDifferent(allB))
+                && (areAllSame(allC) || areAllDifferent(allC))
+                && (areAllSame(allD) || areAllDifferent(allD))
+        print(isSet)
     }
     
-    private func areAllSame(first: CardContent, second: CardContent, third: CardContent) -> Bool {
-        first == second && second == third
+    private func areAllSame(_ states: [ThreeState]) -> Bool {
+        states.dropFirst().reduce(true) { (partialResult, state) in
+            partialResult && state == states.first
+        }
     }
     
-    private func areAllDifferent(first: CardContent, second: CardContent, third: CardContent) -> Bool {
-        first != second && second != third && third != first
+    private func areAllDifferent(_ states: [ThreeState]) -> Bool {
+        states.dropFirst().reduce(true) { (partialResult, state) in
+            partialResult && state != states.first
+        }
     }
     
     // MARK: - Other Types

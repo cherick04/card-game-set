@@ -7,11 +7,9 @@
 
 import Foundation
 
-/// Lists all possible states
-enum ThreeState {
-    case a
-    case b
-    case c
+/// Data type with 3 states
+enum ThreeState: CaseIterable {
+    case triStateA
+    case triStateB
+    case triStateC
 }
-
-extension ThreeState: CaseIterable {}

@@ -1,5 +1,5 @@
 //
-//  CardView.swift
+//  SetGameCardView.swift
 //  Set
 //
 //  Created by Erick Chacon on 9/20/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CardView: View {
+struct SetGameCardView: View {
     let card: SetCardGame.Card
     
     var body: some View {
@@ -72,45 +72,45 @@ struct CardView: View {
     
     @ViewBuilder
     private func getSymbol() -> some View {
-        switch card.content.symbol {
-        case .a:
+        switch card.content.stateA {
+        case .triStateA:
             diamondSymbol
-        case .b:
+        case .triStateB:
             ovalSymbol
-        case .c:
+        case .triStateC:
             rectangleSymbol
         }
     }
     
     private func getNumber() -> Int {
-        switch card.content.number {
-        case .a:
+        switch card.content.stateB {
+        case .triStateA:
             return 1
-        case .b:
+        case .triStateB:
             return 2
-        case .c:
+        case .triStateC:
             return 3
         }
     }
     
     private func getOpacity() -> Double {
-        switch card.content.shade {
-        case .a:
+        switch card.content.stateC {
+        case .triStateA:
             return 1
-        case .b:
+        case .triStateB:
             return 0.5
-        case .c:
+        case .triStateC:
             return 0
         }
     }
     
     private func getColor() -> Color {
-        switch card.content.color {
-        case .a:
+        switch card.content.stateD {
+        case .triStateA:
             return .red
-        case .b:
+        case .triStateB:
             return .green
-        case .c:
+        case .triStateC:
             return .purple
         }
     }

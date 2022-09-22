@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Feature {
-    let number: ThreeState
-    let color: ThreeState
-    let symbol: ThreeState
-    let shade: ThreeState
+struct Feature: QuadThreeState {
+    let stateA: ThreeState
+    let stateB: ThreeState
+    let stateC: ThreeState
+    let stateD: ThreeState
 }
 
 extension Feature {
@@ -19,11 +19,11 @@ extension Feature {
     /// Returns an array of `Feature` that contains all 81 cards
     static func allCards() -> [Feature] {
         var features: [Feature] = []
-        for number in ThreeState.allCases {
-            for color in ThreeState.allCases {
-                for symbol in ThreeState.allCases {
-                    for shade in ThreeState.allCases {
-                        let feature = Feature(number: number, color: color, symbol: symbol, shade: shade)
+        for a in ThreeState.allCases {
+            for b in ThreeState.allCases {
+                for c in ThreeState.allCases {
+                    for d in ThreeState.allCases {
+                        let feature = Feature(stateA: a, stateB: b, stateC: c, stateD: d)
                         features.append(feature)
                     }
                 }
@@ -31,15 +31,5 @@ extension Feature {
         }
         
         return features
-    }
-}
-
-extension Feature: Equatable {
-    
-    static func ==(lhs: Feature, rhs: Feature) -> Bool {
-        lhs.number == rhs.number &&
-        lhs.color == rhs.color &&
-        lhs.symbol == rhs.symbol &&
-        lhs.shade == rhs.shade
     }
 }

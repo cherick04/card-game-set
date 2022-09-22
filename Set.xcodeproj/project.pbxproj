@@ -12,11 +12,12 @@
 		7C70093928D7F37C004F474D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C70093828D7F37C004F474D /* Assets.xcassets */; };
 		7C70093C28D7F37C004F474D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C70093B28D7F37C004F474D /* Preview Assets.xcassets */; };
 		7C70094628D92FF3004F474D /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70094528D92FF3004F474D /* AspectVGrid.swift */; };
-		7C70094828DA14E0004F474D /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70094728DA14E0004F474D /* CardView.swift */; };
+		7C70094828DA14E0004F474D /* SetGameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70094728DA14E0004F474D /* SetGameCardView.swift */; };
 		7C70094A28DA1512004F474D /* CardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70094928DA1512004F474D /* CardGame.swift */; };
 		7C70094C28DA15D2004F474D /* SetCardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C70094B28DA15D2004F474D /* SetCardGame.swift */; };
 		7C9DFF6728DB887800CFEE9B /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9DFF6628DB887800CFEE9B /* Diamond.swift */; };
 		7C9DFF6928DCA61D00CFEE9B /* ThreeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9DFF6828DCA61D00CFEE9B /* ThreeState.swift */; };
+		7C9DFF6B28DCABEB00CFEE9B /* QuadThreeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9DFF6A28DCABEB00CFEE9B /* QuadThreeState.swift */; };
 		7CB2A5DF28DA6E540066B661 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2A5DE28DA6E540066B661 /* Feature.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,11 +28,12 @@
 		7C70093828D7F37C004F474D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C70093B28D7F37C004F474D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7C70094528D92FF3004F474D /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
-		7C70094728DA14E0004F474D /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		7C70094728DA14E0004F474D /* SetGameCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameCardView.swift; sourceTree = "<group>"; };
 		7C70094928DA1512004F474D /* CardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGame.swift; sourceTree = "<group>"; };
 		7C70094B28DA15D2004F474D /* SetCardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGame.swift; sourceTree = "<group>"; };
 		7C9DFF6628DB887800CFEE9B /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
 		7C9DFF6828DCA61D00CFEE9B /* ThreeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeState.swift; sourceTree = "<group>"; };
+		7C9DFF6A28DCABEB00CFEE9B /* QuadThreeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadThreeState.swift; sourceTree = "<group>"; };
 		7CB2A5DE28DA6E540066B661 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +91,7 @@
 				7C70094928DA1512004F474D /* CardGame.swift */,
 				7CB2A5DE28DA6E540066B661 /* Feature.swift */,
 				7C9DFF6828DCA61D00CFEE9B /* ThreeState.swift */,
+				7C9DFF6A28DCABEB00CFEE9B /* QuadThreeState.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -98,7 +101,7 @@
 			children = (
 				7C70093628D7F379004F474D /* SetGameView.swift */,
 				7C70094528D92FF3004F474D /* AspectVGrid.swift */,
-				7C70094728DA14E0004F474D /* CardView.swift */,
+				7C70094728DA14E0004F474D /* SetGameCardView.swift */,
 				7C9DFF6628DB887800CFEE9B /* Diamond.swift */,
 			);
 			path = View;
@@ -185,8 +188,9 @@
 				7C70093728D7F379004F474D /* SetGameView.swift in Sources */,
 				7C9DFF6928DCA61D00CFEE9B /* ThreeState.swift in Sources */,
 				7CB2A5DF28DA6E540066B661 /* Feature.swift in Sources */,
+				7C9DFF6B28DCABEB00CFEE9B /* QuadThreeState.swift in Sources */,
 				7C70093528D7F379004F474D /* SetApp.swift in Sources */,
-				7C70094828DA14E0004F474D /* CardView.swift in Sources */,
+				7C70094828DA14E0004F474D /* SetGameCardView.swift in Sources */,
 				7C9DFF6728DB887800CFEE9B /* Diamond.swift in Sources */,
 				7C70094628D92FF3004F474D /* AspectVGrid.swift in Sources */,
 				7C70094C28DA15D2004F474D /* SetCardGame.swift in Sources */,
