@@ -16,6 +16,12 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     private(set) var availableCards: [Card]
     private(set) var cardsOnDeck: [Card]
     
+    private var isSetFound = false {
+        didSet {
+            updateCards()
+        }
+    }
+    
     private var selectedCardIndices: [Int] = [] {
         didSet {
             if isPossibleSet {
@@ -62,10 +68,15 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
             selectedCardIndices.append(chosenIndex)
         }
         cardsOnDeck[chosenIndex].isSelected.toggle()
-}
+    }
     
-    // TODO: - Revise method
-    private func checkIfCardsFormASet() {
+    private mutating func updateCards() {
+        selectedCardIndices.forEach { index in
+            cardsOnDeck[index].isPartOfASet = isSetFound
+        }
+    }
+    
+    private mutating func checkIfCardsFormASet() {
         guard isPossibleSet else { return }
         
         let cardContent = selectedCardIndices.map { cardsOnDeck[$0].content }
@@ -73,11 +84,10 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
         let allB = cardContent.map(\.stateB)
         let allC = cardContent.map(\.stateC)
         let allD = cardContent.map(\.stateD)
-        let isSet = (areAllSame(allA) || areAllDifferent(allA))
+        isSetFound = (areAllSame(allA) || areAllDifferent(allA))
                 && (areAllSame(allB) || areAllDifferent(allB))
                 && (areAllSame(allC) || areAllDifferent(allC))
                 && (areAllSame(allD) || areAllDifferent(allD))
-        print(isSet)
     }
     
     private func areAllSame(_ states: [ThreeState]) -> Bool {
@@ -96,8 +106,8 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
         
     /// Model holding card information
     struct Card: Identifiable {
-        var isSet = false
         var isSelected = false
+        var isPartOfASet: Bool?
         let content: CardContent
         let id: Int
     }

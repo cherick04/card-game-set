@@ -18,7 +18,13 @@ struct SetGameCardView: View {
                 shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
                 getContent(for: geometry.size)
                 if card.isSelected {
-                    shape.fill(.blue).opacity(DrawingConstants.selectedOpacity)
+                    if let isPartOfASet = card.isPartOfASet {
+                        shape
+                            .fill(isPartOfASet ? .green : .red)
+                            .opacity(DrawingConstants.selectedOpacity)
+                    } else {
+                        shape.fill(.blue).opacity(DrawingConstants.selectedOpacity)
+                    }
                 }
             }
         }
