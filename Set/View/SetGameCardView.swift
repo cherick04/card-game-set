@@ -20,7 +20,7 @@ struct SetGameCardView: View {
                 if card.isSelected {
                     if let isPartOfASet = card.isPartOfASet {
                         shape
-                            .fill(isPartOfASet ? .green : .red)
+                            .fill(isPartOfASet ? DrawingConstants.setMatchColor : DrawingConstants.setUnmatchColor)
                             .opacity(DrawingConstants.selectedOpacity)
                     } else {
                         shape.fill(.blue).opacity(DrawingConstants.selectedOpacity)
@@ -104,7 +104,7 @@ struct SetGameCardView: View {
         case .triStateA:
             return 1
         case .triStateB:
-            return 0.5
+            return 0.25
         case .triStateC:
             return 0
         }
@@ -125,5 +125,7 @@ struct SetGameCardView: View {
         static let cornerRadius: CGFloat = 15
         static let lineWidth: CGFloat = 2
         static let selectedOpacity: CGFloat = 0.25
+        static let setMatchColor: Color = .green
+        static let setUnmatchColor: Color = .red
     }
 }

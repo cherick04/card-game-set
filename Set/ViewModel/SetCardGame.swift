@@ -20,7 +20,7 @@ class SetCardGame: ObservableObject {
     // MARK: - Static
     
     static func createSetGame() -> Game {
-        let data = Feature.allCards().shuffled()
+        let data = Feature.allCards()
         let cardsOnDeckCount = min(DEFAULT_NUMBER_OF_CARDS, data.count)
         return Game(cardCount: data.count, cardsOnDeckCount: cardsOnDeckCount) { data[$0] }
     }
@@ -29,7 +29,7 @@ class SetCardGame: ObservableObject {
     @Published private var model: Game
     
     var isDeckEmpty: Bool {
-        model.cardsOnDeck.count == model.availableCards.count
+        model.availableCards.isEmpty
     }
     
     /// Array of cards showing up on deck
