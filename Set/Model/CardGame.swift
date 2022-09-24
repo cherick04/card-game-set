@@ -56,11 +56,14 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     }
     
     mutating func select(_ card: Card) {
-        guard let chosenIndex = cardsOnDeck.firstIndex(where: {$0.id == card.id}),
-              !isPossibleSet else {
+        guard let chosenIndex = cardsOnDeck.firstIndex(where: {$0.id == card.id}) else {
             return
         }
-            
+        
+        if isPossibleSet {
+            isSetFound ? replaceCards() : deselectCards()
+        }
+        
         if cardsOnDeck[chosenIndex].isSelected,
            let selectedCardIndex = selectedCardIndices.firstIndex(where: {$0 == chosenIndex}) {
             selectedCardIndices.remove(at: selectedCardIndex)
@@ -74,6 +77,18 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
         selectedCardIndices.forEach { index in
             cardsOnDeck[index].isPartOfASet = isSetFound
         }
+    }
+    
+    private mutating func deselectCards() {
+        selectedCardIndices.forEach { index in
+            cardsOnDeck[index].isSelected = false
+            cardsOnDeck[index].isPartOfASet = nil
+        }
+        selectedCardIndices = []
+    }
+    
+    private mutating func replaceCards() {
+        // TODO: Implement
     }
     
     private mutating func checkIfCardsFormASet() {
