@@ -33,6 +33,7 @@ extension Feature {
         return features
     }
     
+    /// Returns 12 cards
     static func someCards() -> [Feature] {
         var features: [Feature] = []
         for a in ThreeState.allCases {
