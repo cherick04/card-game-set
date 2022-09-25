@@ -21,8 +21,8 @@ class SetCardGame: ObservableObject {
     
     static func createSetGame() -> Game {
         let data = Feature.allCards()
-        let cardsOnDeckCount = min(DEFAULT_NUMBER_OF_CARDS, data.count)
-        return Game(cardCount: data.count, cardsOnDeckCount: cardsOnDeckCount) { data[$0] }
+        let screenCardsCount = min(DEFAULT_NUMBER_OF_CARDS, data.count)
+        return Game(cardCount: data.count, screenCardsCount: screenCardsCount) { data[$0] }
     }
     
     // MARK: - Properties
@@ -33,8 +33,8 @@ class SetCardGame: ObservableObject {
     }
     
     /// Array of cards showing up on deck
-    var cardsOnDeck: [Card] {
-        model.cardsOnDeck
+    var cardsOnScreen: [Card] {
+        model.cardsOnScreen
     }
     
     // MARK: - Initializer

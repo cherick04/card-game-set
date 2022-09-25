@@ -32,4 +32,16 @@ extension Feature {
         
         return features
     }
+    
+    static func someCards() -> [Feature] {
+        var features: [Feature] = []
+        for a in ThreeState.allCases {
+            for b in ThreeState.allCases {
+                let feature = Feature(stateA: a, stateB: b, stateC: .triStateA, stateD: .triStateA)
+                        features.append(feature)
+            }
+        }
+        
+        return features
+    }
 }

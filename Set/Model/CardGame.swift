@@ -14,7 +14,7 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     private let SET_COUNT = 3
     
     private(set) var availableCards: [Card]
-    private(set) var cardsOnDeck: [Card]
+    private(set) var cardsOnScreen: [Card]
     
     private var isSetFound = false {
         didSet {
@@ -35,15 +35,15 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     }
     
     // MARK: - Initializer
-    init(cardCount: Int, cardsOnDeckCount: Int, createCardContent: (Int) -> CardContent) {
+    init(cardCount: Int, screenCardsCount: Int, createCardContent: (Int) -> CardContent) {
         availableCards = []
         for setIndex in 0..<cardCount {
             availableCards.append(Card(content: createCardContent(setIndex), id: setIndex))
         }
-//        availableCards.shuffle()
+        availableCards.shuffle()
         
-        cardsOnDeck = []
-        addToScreen(cardCount: cardsOnDeckCount)
+        cardsOnScreen = []
+        addToScreen(cardCount: screenCardsCount)
     }
     
     // MARK: - Methods
@@ -58,7 +58,7 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     }
     
     mutating func select(_ card: Card) {
-        guard let chosenIndex = cardsOnDeck.firstIndex(where: {$0.id == card.id}) else {
+        guard let chosenIndex = cardsOnScreen.firstIndex(where: {$0.id == card.id}) else {
             return
         }
         
@@ -75,25 +75,25 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
             }
         }
         
-        if cardsOnDeck[chosenIndex].isSelected,
+        if cardsOnScreen[chosenIndex].isSelected,
            let selectedCardIndex = selectedCardIndices.firstIndex(where: {$0 == chosenIndex}) {
             selectedCardIndices.remove(at: selectedCardIndex)
         } else {
             selectedCardIndices.append(chosenIndex)
         }
-        cardsOnDeck[chosenIndex].isSelected.toggle()
+        cardsOnScreen[chosenIndex].isSelected.toggle()
     }
     
     private mutating func updateCardsSetState() {
         selectedCardIndices.forEach { index in
-            cardsOnDeck[index].isPartOfASet = isSetFound
+            cardsOnScreen[index].isPartOfASet = isSetFound
         }
     }
     
     private mutating func deselectCards() {
         selectedCardIndices.forEach { index in
-            cardsOnDeck[index].isSelected = false
-            cardsOnDeck[index].isPartOfASet = nil
+            cardsOnScreen[index].isSelected = false
+            cardsOnScreen[index].isPartOfASet = nil
         }
         selectedCardIndices = []
     }
@@ -101,8 +101,10 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     private mutating func replaceSetCards() {
         for index in selectedCardIndices {
             if let first = availableCards.first {
-                cardsOnDeck[index] = first
+                cardsOnScreen[index] = first
                 availableCards.removeFirst()
+            } else {
+                cardsOnScreen.remove(at: index)
             }
         }
         selectedCardIndices = []
@@ -112,7 +114,7 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     private mutating func addToScreen(cardCount: Int) {
         for _ in 0..<cardCount {
             if let first = availableCards.first {
-                cardsOnDeck.append(first)
+                cardsOnScreen.append(first)
                 availableCards.removeFirst()
             }
         }
@@ -121,7 +123,7 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     private mutating func checkIfCardsFormASet() {
         guard isPossibleSet else { return }
         
-        let cardContent = selectedCardIndices.map { cardsOnDeck[$0].content }
+        let cardContent = selectedCardIndices.map { cardsOnScreen[$0].content }
         let allA = cardContent.map(\.stateA)
         let allB = cardContent.map(\.stateB)
         let allC = cardContent.map(\.stateC)
