@@ -32,38 +32,53 @@ struct SetGameCardView: View {
     
     /// Diamond shape
     private var diamondSymbol: some View {
-        ZStack {
+        let color = getColor()
+        return ZStack {
+            if isStriped() {
+                StripedView(color: color)
+                    .mask(Diamond())
+            }
             Diamond()
-                .fill(getColor())
+                .fill(color)
                 .opacity(getOpacity())
             Diamond()
                 .stroke(lineWidth: DrawingConstants.lineWidth)
         }
-        .foregroundColor(getColor())
+        .foregroundColor(color)
     }
     
     /// Oval shape
     private var ovalSymbol: some View {
-        ZStack {
+        let color = getColor()
+        return ZStack {
+            if isStriped() {
+                StripedView(color: color)
+                    .mask(Ellipse())
+            }
             Ellipse()
-                .fill(getColor())
+                .fill(color)
                 .opacity(getOpacity())
             Ellipse()
                 .strokeBorder(lineWidth: DrawingConstants.lineWidth)
         }
-        .foregroundColor(getColor())
+        .foregroundColor(color)
     }
     
     /// Rectangle Shape
     private var rectangleSymbol: some View {
-        ZStack {
+        let color = getColor()
+        return ZStack {
+            if isStriped() {
+                StripedView(color: color)
+                    .mask(Rectangle())
+            }
             Rectangle()
-                .fill(getColor())
+                .fill(color)
                 .opacity(getOpacity())
             Rectangle()
                 .strokeBorder(lineWidth: DrawingConstants.lineWidth)
         }
-        .foregroundColor(getColor())
+        .foregroundColor(color)
     }
     
     /// Creates content for the card.
@@ -103,11 +118,13 @@ struct SetGameCardView: View {
         switch card.content.stateC {
         case .triStateA:
             return 1
-        case .triStateB:
-            return 0.25
-        case .triStateC:
+        case .triStateB, .triStateC:
             return 0
         }
+    }
+    
+    private func isStriped() -> Bool {
+        return card.content.stateC == .triStateB
     }
     
     private func getColor() -> Color {
