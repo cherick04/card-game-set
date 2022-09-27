@@ -11,22 +11,43 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     
     // MARK: - Properties
     
+    /// Number of cards that make a set
     private let SET_COUNT: Int = 3
+    /// In seconds
+    private let BONUS_MAX_TIME: Int = 15
     
+    let cardCount: Int
     private(set) var availableCards: [Card]
     private(set) var cardsOnScreen: [Card]
     
+    private(set) var score = 0
+    private(set) var numberOfSetsFound: Int = 0 {
+        willSet {
+            // restart bonus timer after finding a set
+            if newValue - numberOfSetsFound > 0 {
+                bonusPointsDate = Date()
+            }
+        }
+    }
+    
+    /// Date reference so bonus can be calculated
+    private var bonusPointsDate: Date?
+    
+    var numberOfSets: Int {
+        cardCount / SET_COUNT
+    }
+    
     private var isSetFound = false {
         didSet {
+            updateScore()
+            numberOfSetsFound += isSetFound ? 1 : 0
             updateCardsSetState()
         }
     }
     
     private var selectedCardIDs: [Int] = [] {
         didSet {
-            if isPossibleSet {
-                checkIfCardsFormASet()
-            }
+            checkIfCardsFormASet()
         }
     }
     
@@ -41,9 +62,11 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
             availableCards.append(Card(content: createCardContent(setIndex), id: setIndex))
         }
         availableCards.shuffle()
+        self.cardCount = cardCount
         
         cardsOnScreen = []
         addToScreen(cardCount: screenCardsCount)
+        bonusPointsDate = Date()
     }
     
     // MARK: - Methods
@@ -130,6 +153,18 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
         }
     }
     
+    private mutating func updateScore() {
+        if isSetFound {
+            var timeDifference = BONUS_MAX_TIME
+            if let bonusPointsDate = bonusPointsDate {
+                timeDifference = Int(Date().timeIntervalSince(bonusPointsDate))
+            }
+            score += max(BONUS_MAX_TIME - timeDifference, 1)
+        } else {
+            score -= 1
+        }
+    }
+    
     private mutating func checkIfCardsFormASet() {
         guard isPossibleSet else { return }
         
@@ -154,12 +189,7 @@ struct CardGame<CardContent> where CardContent: QuadThreeState {
     }
     
     private func areAllDifferent(_ states: [ThreeState]) -> Bool {
-        var tempState = states.first
-        return states.dropFirst().reduce(true) { (partialResult, state) in
-            let result = state != tempState
-            tempState = state
-            return partialResult && result
-        }
+        return Set(states).count == states.count
     }
     
     // MARK: - Other Types

@@ -101,11 +101,10 @@
 		7C70094328D92FC3004F474D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7C70093628D7F379004F474D /* SetGameView.swift */,
+				7CDBFD4328E25D7A00E20E9E /* Supporting Views */,
 				7C70094528D92FF3004F474D /* AspectVGrid.swift */,
 				7C70094728DA14E0004F474D /* SetGameCardView.swift */,
-				7C9DFF6628DB887800CFEE9B /* Diamond.swift */,
-				7C6EE5A728E22CE600C26020 /* StripedView.swift */,
+				7C70093628D7F379004F474D /* SetGameView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -116,6 +115,15 @@
 				7C70094B28DA15D2004F474D /* SetCardGame.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7CDBFD4328E25D7A00E20E9E /* Supporting Views */ = {
+			isa = PBXGroup;
+			children = (
+				7C9DFF6628DB887800CFEE9B /* Diamond.swift */,
+				7C6EE5A728E22CE600C26020 /* StripedView.swift */,
+			);
+			path = "Supporting Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
