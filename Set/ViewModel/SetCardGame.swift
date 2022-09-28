@@ -34,12 +34,11 @@ class SetCardGame: ObservableObject {
     }
     
     var isDeckEmpty: Bool {
-        model.availableCards.isEmpty
+        model.cards.filter({$0.position == .triStateA}).isEmpty
     }
     
-    /// Array of cards showing up on deck
     var cardsOnScreen: [Card] {
-        model.cardsOnScreen
+        model.cards.filter { $0.position == .triStateB }
     }
     
     var numberOfSetsFound: Int {

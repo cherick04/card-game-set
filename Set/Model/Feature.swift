@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Feature: QuadThreeState {
-    let stateA: ThreeState
-    let stateB: ThreeState
-    let stateC: ThreeState
-    let stateD: ThreeState
+struct Feature: QuadTriState {
+    let stateA: TriState
+    let stateB: TriState
+    let stateC: TriState
+    let stateD: TriState
 }
 
 extension Feature {
@@ -19,10 +19,10 @@ extension Feature {
     /// Returns an array of `Feature` that contains all 81 cards
     static func allCards() -> [Feature] {
         var features: [Feature] = []
-        for a in ThreeState.allCases {
-            for b in ThreeState.allCases {
-                for c in ThreeState.allCases {
-                    for d in ThreeState.allCases {
+        for a in TriState.allCases {
+            for b in TriState.allCases {
+                for c in TriState.allCases {
+                    for d in TriState.allCases {
                         let feature = Feature(stateA: a, stateB: b, stateC: c, stateD: d)
                         features.append(feature)
                     }
@@ -36,10 +36,10 @@ extension Feature {
     /// Returns 12 cards
     static func someCards() -> [Feature] {
         var features: [Feature] = []
-        for a in ThreeState.allCases {
-            for b in ThreeState.allCases {
+        for a in TriState.allCases {
+            for b in TriState.allCases {
                 let feature = Feature(stateA: a, stateB: b, stateC: .triStateA, stateD: .triStateA)
-                        features.append(feature)
+                features.append(feature)
             }
         }
         
