@@ -44,14 +44,14 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
         }
     }
     
-    private var selectedCardIDs: [Int] = [] {
+    private var selectedCardIndices: [Int] = [] {
         didSet {
             checkIfCardsFormASet()
         }
     }
     
     private var isPossibleSet: Bool {
-        selectedCardIDs.count == SET_COUNT
+        selectedCardIndices.count == SET_COUNT
     }
     
     // MARK: - Initializer
@@ -78,11 +78,13 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
     }
     
     mutating func select(_ card: Card) {
-        
-        // TODO: Clean this up
+        guard let chosenIndex = cards.firstIndex(where: {$0.id == card.id}) else {
+            return
+        }
+        // TODO: Clean this up (arrow code)
         if isPossibleSet {
             if isSetFound {
-                if !selectedCardIDs.contains(card.id) {
+                if !selectedCardIndices.contains(chosenIndex) {
                     dealMoreCards(count: SET_COUNT)
                 } else {
                     return
@@ -92,62 +94,52 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
             }
         }
         
-        
-        guard let chosenIndex = cards.firstIndex(where: {$0.id == card.id}) else {
-            return
-        }
-        
         if cards[chosenIndex].isSelected,
-           let index =  selectedCardIDs.firstIndex(where: {$0 == card.id}) {
-            selectedCardIDs.remove(at: index)
+           let index =  selectedCardIndices.firstIndex(where: {$0 == chosenIndex}) {
+            selectedCardIndices.remove(at: index)
         } else {
-            selectedCardIDs.append(card.id)
+            selectedCardIndices.append(chosenIndex)
         }
         cards[chosenIndex].isSelected.toggle()
     }
     
     private mutating func updateCardsSetState() {
-        selectedCardIDs.forEach { id in
-            if let index = cards.firstIndex(where: {$0.id == id} ) {
-                cards[index].isPartOfASet = isSetFound
-            }
+        selectedCardIndices.forEach { index in
+            cards[index].isPartOfASet = isSetFound
         }
     }
     
     private mutating func deselectCards() {
-        selectedCardIDs.forEach { id in
-            if let index = cards.firstIndex(where: {$0.id == id} ) {
-                cards[index].isSelected = false
-                cards[index].isPartOfASet = nil
-            }
+        selectedCardIndices.forEach { index in
+            cards[index].isSelected = false
+            cards[index].isPartOfASet = nil
         }
-        selectedCardIDs = []
+        selectedCardIndices = []
     }
     
     private mutating func replaceSetCards() {
-        // TODO: Refactor
-        for id in selectedCardIDs {
-            guard let index = cards.firstIndex(where: {$0.id == id}) else {
-                continue
-            }
-            
-            let newIndex = lastCardOnScreenIndex + 1
+        for index in selectedCardIndices {
             cards[index].position = .triStateC
+            let newIndex = lastCardOnScreenIndex + 1
+            
+            guard newIndex < cards.count else { continue }
+            
             cards[newIndex].position = .triStateB
+            cards.swapAt(index, newIndex)
             lastCardOnScreenIndex = newIndex
         }
-        selectedCardIDs = []
+        selectedCardIndices = []
         isSetFound = false
     }
     
     private mutating func addToScreen(cardCount: Int) {
-        // TODO: Works, but brings difficulty when replacing cards
         let startIndex = lastCardOnScreenIndex + 1
         let endIndex = startIndex + cardCount
         for index in startIndex..<endIndex {
             cards[index].position = .triStateB
             lastCardOnScreenIndex = index
         }
+        
     }
     
     private mutating func updateScore() {
@@ -165,9 +157,7 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
     private mutating func checkIfCardsFormASet() {
         guard isPossibleSet else { return }
         
-        let cardContent = cards
-            .filter { selectedCardIDs.contains($0.id) }
-            .map { $0.content }
+        let cardContent = selectedCardIndices.map { cards[$0].content }
         
         let allA = cardContent.map(\.stateA)
         let allB = cardContent.map(\.stateB)

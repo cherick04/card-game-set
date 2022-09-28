@@ -33,13 +33,28 @@ extension Feature {
         return features
     }
     
-    /// Returns 12 cards
-    static func someCards() -> [Feature] {
+    /// Returns 9 cards
+    static func nineCards() -> [Feature] {
         var features: [Feature] = []
         for a in TriState.allCases {
             for b in TriState.allCases {
                 let feature = Feature(stateA: a, stateB: b, stateC: .triStateA, stateD: .triStateA)
                 features.append(feature)
+            }
+        }
+        
+        return features
+    }
+    
+    /// Returns 27 cards
+    static func twentySevenCards() -> [Feature] {
+        var features: [Feature] = []
+        for a in TriState.allCases {
+            for b in TriState.allCases {
+                for c in TriState.allCases {
+                    let feature = Feature(stateA: a, stateB: b, stateC: c, stateD: .triStateA)
+                    features.append(feature)
+                }
             }
         }
         
