@@ -11,16 +11,14 @@ struct SetGameView: View {
     
     @ObservedObject var game: SetCardGame
     
+    /// Used to temporary track whether a card has been dealt or not.
+    /// Contains id's of cards
+    @State private var dealt = Set<Int>()
+    
     var body: some View {
         VStack {
             score
-            AspectVGrid(items: game.cardsOnScreen, aspectRatio: 2/3) { card in
-                SetGameCardView(card: card)
-                    .padding(2)
-                    .onTapGesture {
-                        game.select(card)
-                    }
-            }
+            gameBody
             HStack {
                 dealButton
                 Spacer()
@@ -29,6 +27,27 @@ struct SetGameView: View {
             .padding(.horizontal)
         }
         .padding()
+    }
+    
+    private var gameBody: some View {
+        AspectVGrid(
+            items: game.cardsOnScreen,
+            aspectRatio: 2/3
+        ) { card in
+            SetGameCardView(card: card)
+                .padding(2)
+                .onTapGesture {
+                    game.select(card)
+                }
+        }
+        .foregroundColor(.red)
+//        .foregroundStyle(
+//            LinearGradient(
+//                colors: [.red, .white, .blue],
+//                startPoint: .top,
+//                endPoint: .bottom
+//            )
+//        )
     }
     
     private var score: some View {

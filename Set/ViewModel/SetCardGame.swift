@@ -20,10 +20,10 @@ class SetCardGame: ObservableObject {
     // MARK: - Static
     
     static func createSetGame() -> Game {
-        let data = Feature.allCards()
+        let data = Feature.nineCards()
         let cardCount = data.count
         let screenCardsCount = min(DEFAULT_NUMBER_OF_CARDS, cardCount)
-        return Game(cardCount: cardCount, screenCardsCount: screenCardsCount) { data[$0] }
+        return Game(cardCount: cardCount, screenCardsCount: 3) { data[$0] }
     }
     
     // MARK: - Properties
@@ -37,8 +37,13 @@ class SetCardGame: ObservableObject {
         model.cards.filter({$0.position == .triStateA}).isEmpty
     }
     
+    // TODO: delete this property since View will determine which cards to show on screen
     var cardsOnScreen: [Card] {
         model.cards.filter { $0.position == .triStateB }
+    }
+    
+    var cards: [Card] {
+        model.cards
     }
     
     var numberOfSetsFound: Int {

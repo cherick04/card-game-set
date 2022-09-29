@@ -38,15 +38,20 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
     
     private var isSetFound = false {
         didSet {
-            updateScore()
-            numberOfSetsFound += isSetFound ? 1 : 0
-            updateCardsSetState()
+            if isPossibleSet {
+                updateScore()
+                numberOfSetsFound += isSetFound ? 1 : 0
+                updateCardsSetState()
+            }
         }
     }
     
     private var selectedCardIndices: [Int] = [] {
         didSet {
             checkIfCardsFormASet()
+            if selectedCardIndices.isEmpty {
+                isSetFound = false
+            }
         }
     }
     
@@ -85,7 +90,7 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
         if isPossibleSet {
             if isSetFound {
                 if !selectedCardIndices.contains(chosenIndex) {
-                    dealMoreCards(count: SET_COUNT)
+                    discardSetCards()
                 } else {
                     return
                 }
@@ -117,6 +122,13 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
         selectedCardIndices = []
     }
     
+    private mutating func discardSetCards() {
+        for index in selectedCardIndices {
+            cards[index].position = .triStateC
+        }
+        selectedCardIndices = []
+    }
+    
     private mutating func replaceSetCards() {
         for index in selectedCardIndices {
             cards[index].position = .triStateC
@@ -129,7 +141,6 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
             lastCardOnScreenIndex = newIndex
         }
         selectedCardIndices = []
-        isSetFound = false
     }
     
     private mutating func addToScreen(cardCount: Int) {
