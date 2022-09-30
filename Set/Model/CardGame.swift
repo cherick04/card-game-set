@@ -67,7 +67,6 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
             cards.append(Card(content: createCardContent(setIndex), id: setIndex))
         }
         cards.shuffle()
-        addToScreen(cardCount: screenCardsCount)
         bonusPointsDate = Date()
     }
     
@@ -150,7 +149,6 @@ struct CardGame<CardContent> where CardContent: QuadTriState {
             cards[index].position = .triStateB
             lastCardOnScreenIndex = index
         }
-        
     }
     
     private mutating func updateScore() {

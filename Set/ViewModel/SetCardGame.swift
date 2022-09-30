@@ -20,10 +20,10 @@ class SetCardGame: ObservableObject {
     // MARK: - Static
     
     static func createSetGame() -> Game {
-        let data = Feature.nineCards()
+        let data = Feature.allCards()
         let cardCount = data.count
         let screenCardsCount = min(DEFAULT_NUMBER_OF_CARDS, cardCount)
-        return Game(cardCount: cardCount, screenCardsCount: 3) { data[$0] }
+        return Game(cardCount: cardCount, screenCardsCount: screenCardsCount) { data[$0] }
     }
     
     // MARK: - Properties
@@ -70,8 +70,8 @@ class SetCardGame: ObservableObject {
         model = SetCardGame.createSetGame()
     }
     
-    func dealThreeMoreCards() {
-        model.dealMoreCards(count: 3)
+    func dealCard() {
+        model.dealMoreCards(count: 1)
     }
     
     func select(_ card: Card) {
